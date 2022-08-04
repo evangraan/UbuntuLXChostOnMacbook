@@ -1,17 +1,19 @@
 # Installing Ubuntu on the macbook
 
 ## USB installation disk
-- Use a USB stick, at least 2Gb in size
-- On the macbook, instert the USB stick and Erase it
+- Use a USB stick, at least 4Gb in size
+- On the macbook, instert the USB stick and Erase it using disk utility
 - Select MS-DOS FAT as the file system
 - Download open-source app balenaEtcher and install on the macbook
 - Download an Ubuntu 20.04 LTS iso
 - Use etcher to flash the USB drive with the iso image
+- Note: the USB drive will be unreadable by OSX. Do not initialize it when OSX asks you to. If you need to flash it again, use Etcher on OSX. It will work.
 
 ## Ubuntu installation
 - Insert the USB disk in the macbook
 - Reboot the macbook, holding down the option key during boot
 - Select the correct EFI instance to boot from the USB
+- Ensure that the full disk is utilized
 - Install Ubuntu
 - Reboot the macbook
 
@@ -51,6 +53,44 @@ echo "lxc.idmap = u 0 $MS_UID $ME_UID" >> ~/.config/lxc/default.conf
 echo "lxc.idmap = g 0 $MS_GID $ME_GID" >> ~/.config/lxc/default.conf
 echo 'export DOWNLOAD_KEYSERVER="hkp://keyserver.ubuntu.com"' >> ~/.bashrc
 ```
+
+## Dynamic DNS
+Install noip:
+
+```
+cd /usr/local/src/
+wget http://www.noip.com/client/linux/noip-duc-linux.tar.gz
+tar xf noip-duc-linux.tar.gz
+cd noip-2.1.9-1/
+make install
+```
+
+Enter the NoIP credentials
+
+## Install synergy (if Ubuntu desktop was installed)
+
+- Download the correct synergy client from https://symless.com/synergy/download
+```
+sudo apt install aptitude
+sudo aptitude install libqt5core5a libqt5dbus5 libqt5gui5 libqt5gui5-gles libqt5network5 libqt5widgets5 
+wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.0g-2ubuntu4_amd64.deb
+sudo dpkg -i ./libssl1.1_1.1.0g-2ubuntu4_amd64.deb
+rm -i libssl1.1_1.1.0g-2ubuntu4_amd64.deb
+sudo dpkg -i synergy_1.14.5-stable.a975f61a_ubuntu21_amd64.deb
+```
+
+Synergy currently does not support Wayland and only Xorg, so switch to Xorg:
+```
+sudo vi /etc/gdm3/custom.conf
+```
+
+Set ```WaylandEnable=false```
+
+```
+sudo systemctl restart gdm3
+```
+
+Run ```synergy``` from a graphical terminal and configure.
 
 ## OAM&P scripts
 Create the following scripts:
