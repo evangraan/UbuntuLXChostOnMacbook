@@ -54,6 +54,14 @@ echo "lxc.idmap = g 0 $MS_GID $ME_GID" >> ~/.config/lxc/default.conf
 echo 'export DOWNLOAD_KEYSERVER="hkp://keyserver.ubuntu.com"' >> ~/.bashrc
 ```
 
+If you run into permissions errors on ```~/.local``` starting a container, do:
+```
+cd ~/
+setfacl -m u:100000:x . .local
+mkdir .local
+sudo chmod -R ugo+x .local
+```
+
 ## Dynamic DNS
 Install noip:
 
