@@ -54,15 +54,25 @@ echo "lxc.idmap = g 0 $MS_GID $ME_GID" >> ~/.config/lxc/default.conf
 echo 'export DOWNLOAD_KEYSERVER="hkp://keyserver.ubuntu.com"' >> ~/.bashrc
 ```
 
+If you run into permissions errors on ```~/.local``` starting a container, do:
+```
+cd ~/
+setfacl -m u:100000:x . .local
+mkdir .local
+sudo chmod -R ugo+x .local
+```
+
 ## Dynamic DNS
 Install noip:
 
 ```
+sudo apt install build-essential
 cd /usr/local/src/
-wget http://www.noip.com/client/linux/noip-duc-linux.tar.gz
-tar xf noip-duc-linux.tar.gz
+sudo wget http://www.noip.com/client/linux/noip-duc-linux.tar.gz
+sudo tar xf noip-duc-linux.tar.gz
+sudo rm noip-duc-linux.tar.gz
 cd noip-2.1.9-1/
-make install
+sudo make install
 ```
 
 Enter the NoIP credentials
