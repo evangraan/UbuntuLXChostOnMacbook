@@ -67,6 +67,10 @@ make install
 
 Enter the NoIP credentials
 
+## Port forwarding
+
+If you'd like to access services in the containers via the host's public IP, add port forwarding as per https://www.digitalocean.com/community/tutorials/how-to-forward-ports-through-a-linux-gateway-with-iptables
+
 ## Install synergy (if Ubuntu desktop was installed)
 
 - Download the correct synergy client from https://symless.com/synergy/download
