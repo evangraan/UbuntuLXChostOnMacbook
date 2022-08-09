@@ -81,6 +81,34 @@ Enter the NoIP credentials
 
 If you'd like to access services in the containers via the host's public IP, add port forwarding as per https://www.digitalocean.com/community/tutorials/how-to-forward-ports-through-a-linux-gateway-with-iptables
 
+## Shared storage with the host
+
+You can share a directory on the host with a container by editing the container's configuration. First, create the storage directory to be sheared. The mount point will be mounted with user nobody. To ensure write access to the directory:
+
+```
+mkdir -p /path/to/storage
+chmod -R o+w /path/to/storage
+```
+
+Stop the container and edit its configuration:
+
+```
+./stop_container.sh NAME
+vi .local/share/lxc/NAME/config
+```
+
+Add a mount point:
+
+```
+lxc.mount.entry = /path/to/storage storage none bind,create=dir 0.0
+```
+
+Then start the container
+
+```
+./start_container.sh NAME
+```
+
 ## Install synergy (if Ubuntu desktop was installed)
 
 - Download the correct synergy client from https://symless.com/synergy/download
